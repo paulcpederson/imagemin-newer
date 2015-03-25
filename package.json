@@ -1,0 +1,36 @@
+{
+  "name": "newer-imagemin",
+  "version": "0.0.0",
+  "description": "Minify images with imagemin only if they need to be updated",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulcpederson/newer-imagemin.git"
+  },
+  "keywords": [
+    "minify",
+    "jpg",
+    "png",
+    "gif",
+    "svg",
+    "image",
+    "imagemin",
+    "newer"
+  ],
+  "author": "Paul C Pederson <paul.c.pederson@gmail.com> (http://paulcpederson.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulcpederson/newer-imagemin/issues"
+  },
+  "homepage": "https://github.com/paulcpederson/newer-imagemin",
+  "devDependencies": {
+    "standard": "^3.2.1"
+  },
+  "dependencies": {
+    "imagemin": "^3.1.0",
+    "yargs": "^3.6.0"
+  }
+}
