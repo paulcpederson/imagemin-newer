@@ -6,6 +6,8 @@ If you automatically imagemin an entire folder when files change, you'll soon be
 
 # Install
 
+** NOT PUBLISHED YET, WORK IN PROGRESS **
+
 ```
 npm install imagemin-newer
 ```
@@ -15,12 +17,12 @@ npm install imagemin-newer
 To use as a plugin, just require it alongside imagemin and `use` it:
 
 ```js
-var newerImagemin = require('imagemin-newer')
+var newer = require('imagemin-newer')
 var Imagemin = require('imagemin')
 
 var imagemin = new Imagemin()
     .src('images/*.{gif,jpg,png,svg}')
-    .use(newerImagemin())
+    .use(newer())
     .use(Imagemin.gifsicle())
     .use(Imagemin.jpegtran())
     .use(Imagemin.optipng())
@@ -31,10 +33,9 @@ imagemin.run(function (err, files) {
   if (err) {
     throw err
   }
-
   console.log(files[0])
   // => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
-  // the files array will be only what actually changed
+  // the files array will now be only what actually changed
 })
 ```
 
