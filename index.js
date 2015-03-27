@@ -1,14 +1,25 @@
+var changed = require('file-changed')
 var through = require('through2')
+var path = require('path')
+var fs = require('fs')
 
-var newer = function (file, cb) {
-  //logic to determine if the file needs update
-  console.log(file)
-  cb(null, true)
+var newer = function (srcFile, destFile, cb) {
+  fs.stat(destFile, function (err, stats) {
+    if (err) {
+      cb(null, true)
+    } else {
+      var srcTime = srcFile.stat.mtime.getTime()
+      var destTime = stats.mtime.getTime()
+      cb(null, srcTime > destTime)
+    }
+  })
 }
 
-module.exports = function () {
+module.exports = function (dest) {
 
   return through.ctor({objectMode: true}, function (file, enc, cb) {
+    var self = this
+
     if (file.isNull()) {
       cb(null, file)
       return
@@ -19,9 +30,16 @@ module.exports = function () {
       return
     }
 
-    var self = this
+    // /Users/paulcpederson/Documents/Sandbox/npm-tester/                            - process.cwd
+    // /Users/paulcpederson/Documents/Sandbox/npm-tester/images/build                - destBase
+    // /Users/paulcpederson/Documents/Sandbox/npm-tester/images/source/nested/1.gif  - file.path
+    // /Users/paulcpederson/Documents/Sandbox/npm-tester/images/build/nested/1.gif   - ???
 
-    newer(file, function (err, update) {
+    var destBase = path.resolve(file.cwd, dest)
+    var relativePath = path.relative(file.base, file.path)
+    var destPath = path.resolve(destBase, relativePath)
+
+    newer(file, destPath, function (err, update) {
       if (update) {
         self.push(file)
       }
