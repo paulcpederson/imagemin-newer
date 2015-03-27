@@ -1,4 +1,3 @@
-var changed = require('file-changed')
 var through = require('through2')
 var path = require('path')
 var fs = require('fs')
@@ -16,7 +15,6 @@ var newer = function (srcFile, destFile, cb) {
 }
 
 module.exports = function (dest) {
-
   return through.ctor({objectMode: true}, function (file, enc, cb) {
     var self = this
 
@@ -30,11 +28,6 @@ module.exports = function (dest) {
       return
     }
 
-    // /Users/paulcpederson/Documents/Sandbox/npm-tester/                            - process.cwd
-    // /Users/paulcpederson/Documents/Sandbox/npm-tester/images/build                - destBase
-    // /Users/paulcpederson/Documents/Sandbox/npm-tester/images/source/nested/1.gif  - file.path
-    // /Users/paulcpederson/Documents/Sandbox/npm-tester/images/build/nested/1.gif   - ???
-
     var destBase = path.resolve(file.cwd, dest)
     var relativePath = path.relative(file.base, file.path)
     var destPath = path.resolve(destBase, relativePath)
@@ -45,6 +38,5 @@ module.exports = function (dest) {
       }
       return cb()
     })
-
   })
 }
