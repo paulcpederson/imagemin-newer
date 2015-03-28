@@ -4,7 +4,7 @@
   "description": "Minify images with imagemin only if they need to be updated",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "standard && faucet"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,11 @@
   },
   "homepage": "https://github.com/paulcpederson/imagemin-newer",
   "devDependencies": {
-    "standard": "^3.2.1"
+    "faucet": "0.0.1",
+    "ncp": "^2.0.0",
+    "rimraf": "^2.3.2",
+    "standard": "^3.2.1",
+    "tape": "^3.5.0"
   },
   "dependencies": {
     "cli-color": "^0.3.3",
