@@ -37,6 +37,22 @@ imagemin.run(function (err, files) {
 })
 ```
 
+# CLI
+
+If you install globally (or run imagemin-newer via npm scripts) then you'll have access to a small command line tool as well. It doesn't have any of the options that imagemin has and it only accepts directories (no globs).
+
+```
+imagemin-newer <directory> <output>
+
+Options:
+  -d, --debug    turn on verbose logging                        [default: false]
+  -h, --help     Show help
+  -v, --version  Show version number
+
+Examples:
+  imagemin-newer source build    compress images in source and output to build
+```
+
 # Why
 
 If you automatically imagemin an entire folder when files change, you'll soon become tired of watching every image compress for no reason. Imagemin-newer checks to see if images need to be compressed.
