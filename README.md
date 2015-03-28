@@ -10,7 +10,7 @@ npm install imagemin-newer
 
 # Use
 
-To use as a plugin, just require it alongside imagemin and pass it :
+To use as a plugin, just require it alongside imagemin, pass it the output folder for your images, and `use` it:
 
 ```js
 var newer = require('imagemin-newer')
@@ -31,7 +31,7 @@ imagemin.run(function (err, files) {
   }
   console.log(files[0])
   // => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
-  // the files array will now be only what actually changed
+  // the files array will now be only what actually needed updating
 })
 ```
 
@@ -53,7 +53,7 @@ Examples:
 
 # Why
 
-If you automatically imagemin an entire folder when files change, you'll soon become tired of watching every image compress for no reason. Imagemin-newer checks to see if images need to be compressed.
+If you automatically imagemin an entire folder when files change, you'll soon become tired of watching every image compress for no reason. Imagemin-newer checks to see if images have changed before optimizing them.
 
 There are a lot of other ways to do this if you are using gulp, like [gulp-changed](https://www.npmjs.com/package/gulp-changed) or with [gulp-watch](https://github.com/floatdrop/gulp-watch) (like [this](https://github.com/gulpjs/gulp/blob/master/docs/recipes/rebuild-only-files-that-change.md)). So if you use gulp, just do that!
 
@@ -61,7 +61,7 @@ If you don't use gulp, this might be exactly what you're looking for.
 
 # Contribute
 
-Contributions are welcome! This project uses the [standard style](https://github.com/feross/standard), so you should use it too! `npm test` will automatically make sure the code is written to the standard. If the tests pass, you are good to go!
+Contributions are welcome! This project uses the [standard style](https://github.com/feross/standard), so you should use it too! `npm test` will automatically make sure the code is written to the standard and then run tests. If the tests pass, you are good to go!
 
 
 
