@@ -1,6 +1,6 @@
 {
   "name": "imagemin-newer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Minify images with imagemin only if they need to be updated",
   "main": "index.js",
   "scripts": {

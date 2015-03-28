@@ -1,10 +1,8 @@
-# imagemin-newer [![](https://img.shields.io/npm/v/imagemin-newer.svg?style=flat-square)](https://www.npmjs.com/package/imagemin-newer) [![](https://img.shields.io/travis/paulcpederson/imagemin-newer.svg?style=flat-square)](https://travis-ci.org/paulcpederson/imagemin-newer)
+# imagemin-newer &nbsp; &nbsp; [![](https://img.shields.io/npm/v/imagemin-newer.svg?style=flat-square)](https://www.npmjs.com/package/imagemin-newer) [![](https://img.shields.io/travis/paulcpederson/imagemin-newer.svg?style=flat-square)](https://travis-ci.org/paulcpederson/imagemin-newer)
 
 > Minify images with imagemin only if they need to be updated
 
 # Install
-
-** NOT PUBLISHED YET, WORK IN PROGRESS **
 
 ```
 npm install imagemin-newer
