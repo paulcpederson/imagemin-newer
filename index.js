@@ -33,7 +33,7 @@ module.exports = function (dest) {
     var destPath = path.resolve(destBase, relativePath)
 
     newer(file, destPath, function (err, update) {
-      if (update) {
+      if (err | update) {
         self.push(file)
       }
       return cb()
