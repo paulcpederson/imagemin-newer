@@ -1,6 +1,6 @@
 {
   "name": "imagemin-newer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Minify images with imagemin only if they need to be updated",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "cli-color": "^0.3.3",
-    "imagemin": "^3.1.0",
+    "imagemin": "^4.0.0",
     "through2": "^0.6.3",
     "yargs": "^3.6.0"
   }
