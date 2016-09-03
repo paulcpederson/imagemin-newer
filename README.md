@@ -10,6 +10,8 @@ npm install imagemin-newer
 
 # Use
 
+**Warning: This plugin only works for the older 4.x imagemin api. Will not work with 5.x**
+
 To use as a plugin, just require it alongside imagemin, pass it the output folder for your images, and `use` it:
 
 ```js
