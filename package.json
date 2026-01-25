@@ -1,10 +1,14 @@
 {
   "name": "imagemin-newer",
-  "version": "1.0.2",
+  "version": "3.0.0",
   "description": "Minify images with imagemin only if they need to be updated",
-  "main": "index.js",
+  "exports": "./index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "standard && faucet"
+    "test": "faucet"
   },
   "repository": {
     "type": "git",
@@ -33,13 +37,17 @@
     "faucet": "0.0.1",
     "ncp": "^2.0.0",
     "rimraf": "^2.3.2",
-    "standard": "^3.2.1",
     "tape": "^3.5.0"
   },
   "dependencies": {
     "cli-color": "^0.3.3",
-    "imagemin": "^4.0.0",
-    "through2": "^0.6.3",
+    "glob": "^13.0.0",
+    "imagemin": "^9.0.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^8.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-svgo": "^11.0.1",
+    "imagemin-webp": "^8.0.0",
     "yargs": "^3.6.0"
   }
 }

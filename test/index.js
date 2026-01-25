@@ -1,65 +1,64 @@
-var Imagemin = require('imagemin')
-var rimraf = require('rimraf')
-var newer = require('../')
-var path = require('path')
-var test = require('tape')
-var ncp = require('ncp').ncp
-var fs = require('fs')
+import rimraf from "rimraf";
+import { dirname, join, extname } from "path";
+import test from "tape";
+import ncp from "ncp";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import imageminNewer from "../index.js";
 
-var imgFolder = path.join(__dirname, 'images')
-var srcFolder = path.join(imgFolder, 'source')
-var destFolder = path.join(imgFolder, 'build')
-var glob = path.join(srcFolder, '**/*.{gif,jpg,png,svg}')
-
-function imagemin () {
-  return new Imagemin()
-    .src(glob)
-    .use(newer(destFolder))
-    .use(Imagemin.gifsicle())
-    .use(Imagemin.jpegtran())
-    .use(Imagemin.optipng())
-    .use(Imagemin.svgo())
-    .dest(destFolder)
+var imgFolder = join(dirname(fileURLToPath(import.meta.url)), "images");
+var srcFolder = join(imgFolder, "source");
+var destFolder = join(imgFolder, "build");
+function run(webp) {
+  return imageminNewer({ dist: destFolder, src: srcFolder, webp });
 }
 
-function rm () {
-  rimraf.sync(destFolder)
+function rm() {
+  rimraf.sync(destFolder);
 }
 
-test('new images', function (t) {
-  rm()
-  imagemin().run(function (err, files) {
-    if (err) throw err
-    t.equal(files.length, 4, 'if there are no dest files, all files should be optimized')
-    rm()
-    t.end()
-  })
-})
+test("new images", async function (t) {
+  rm();
+  const files = await run();
+  t.equal(files.length, 5, "if no previous output, optimization");
+  rm();
+  t.end();
+});
 
-test('unmodified images', function (t) {
-  rm()
-  ncp(srcFolder, destFolder, function (err) {
-    if (err) throw err
-    imagemin().run(function (err, files) {
-      if (err) throw err
-      t.equal(files.length, 0, 'if all files are the same, no files should be optimized')
-      rm()
-      t.end()
-    })
-  })
-})
+test("unmodified images", async function (t) {
+  rm();
+  ncp(srcFolder, destFolder, async function (err) {
+    if (err) throw err;
+    const files = await run();
+    if (err) throw err;
+    t.equal(files.length, 0, "if all files are the same, no optimization");
+    rm();
+    t.end();
+  });
+});
 
-test('modified images', function (t) {
-  rm()
-  ncp(srcFolder, destFolder, function (err) {
-    if (err) throw err
-    fs.renameSync(path.join(srcFolder, '1.gif'), path.join(srcFolder, '2.gif'))
-    imagemin().run(function (err, files) {
-      fs.renameSync(path.join(srcFolder, '2.gif'), path.join(srcFolder, '1.gif'))
-      rm()
-      if (err) throw err
-      t.equal(files.length, 1, 'if a file is updated, it should be optimized')
-      t.end()
-    })
-  })
-})
+test("modified images", async function (t) {
+  rm();
+  ncp(srcFolder, destFolder, async function (err) {
+    if (err) throw err;
+    fs.renameSync(join(srcFolder, "1.gif"), join(srcFolder, "2.gif"));
+    const files = await run();
+    fs.renameSync(join(srcFolder, "2.gif"), join(srcFolder, "1.gif"));
+    rm();
+    if (err) throw err;
+    t.equal(files.length, 1, "if a file is updated, it should be optimized");
+    t.end();
+  });
+});
+
+
+test("web p generation", async function (t) {
+  rm();
+  const files = await run(true);
+  t.equal(files.length, 5, "should still update all files");
+  const webpFiles = files.map(file => extname(file.destinationPath)).filter(ext => ext === ".webp");
+  t.equal(webpFiles.length, 2, "should output webp files");
+  rm();
+  t.end();
+});
+
