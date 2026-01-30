@@ -20,7 +20,7 @@ function rm() {
 test("new images", async function (t) {
   rm();
   const files = await run();
-  t.equal(files.length, 5, "if no previous output, optimization");
+  t.equal(files.length, 6, "if no previous output, optimization");
   rm();
   t.end();
 });
@@ -51,14 +51,33 @@ test("modified images", async function (t) {
   });
 });
 
-
 test("web p generation", async function (t) {
   rm();
   const files = await run(true);
-  t.equal(files.length, 5, "should still update all files");
-  const webpFiles = files.map(file => extname(file.destinationPath)).filter(ext => ext === ".webp");
-  t.equal(webpFiles.length, 2, "should output webp files");
+  t.equal(files.length, 6, "should still update all files");
+  const webpFiles = files
+    .map((file) => extname(file.destinationPath))
+    .filter((ext) => ext === ".webp");
+  t.equal(webpFiles.length, 3, "should output webp files");
   rm();
   t.end();
 });
 
+test("should preserve folder structure", async function (t) {
+  rm();
+  const files = await run(true);
+  t.ok(
+    files.some((result) => result.destinationPath.includes("/images/build/2.webp")),
+    "should build root files",
+  );
+  t.ok(
+    files.some((result) => result.destinationPath.includes("/images/build/subdir/4.webp")),
+    "should preserve folder tree",
+  );
+  const webpFiles = files
+    .map((file) => extname(file.destinationPath))
+    .filter((ext) => ext === ".webp");
+  t.equal(webpFiles.length, 3, "should output webp files");
+  rm();
+  t.end();
+});

@@ -46,6 +46,22 @@ async function newer(file, src, dest) {
   return file;
 }
 
+async function minifyFile(file, src, dest, webp) {
+  const relativePath = path.relative(src, file);
+  const outputPath = path.dirname(path.join(dest, relativePath));
+  const results = await Imagemin([file], {
+    destination: outputPath,
+    plugins: [
+      imageminGifsicle(),
+      imageminJpegtran(),
+      imageminSvgo(),
+      imageminPngquant(),
+      ...(webp ? [imageminWebp()] : []),
+    ],
+  });
+  return results[0];
+}
+
 /**
  * Options for imagemin newer
  * @typedef {object} NewerOptions
@@ -73,14 +89,7 @@ export default async function (options) {
     files.map((file) => newer(file, src, output)),
   );
   const newerFiles = statCheck.filter((isNewer) => isNewer);
-  return Imagemin(newerFiles, {
-    destination: output,
-    plugins: [
-      imageminGifsicle(),
-      imageminJpegtran(),
-      imageminSvgo(),
-      imageminPngquant(),
-      ...(options.webp ? [imageminWebp()] : []),
-    ],
-  });
+  return Promise.all(
+    newerFiles.map((file) => minifyFile(file, src, output, options.webp)),
+  );
 }
